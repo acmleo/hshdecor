@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>80克纸出纸率计算器</title>
+    <title>三胺纸出纸率计算器 | Melamine Paper Yield Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -33,44 +33,90 @@
             .input-focus {
                 @apply focus:ring-2 focus:ring-primary/50 focus:border-primary;
             }
+            .lang-toggle {
+                @apply px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200;
+            }
+            .lang-toggle.active {
+                @apply bg-primary text-white;
+            }
+            .lang-toggle:not(.active) {
+                @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans">
     <div class="container mx-auto px-4 py-12 max-w-3xl">
+        <div class="flex justify-end mb-4">
+            <div class="flex space-x-2 bg-white rounded-lg p-1 shadow-sm">
+                <button id="lang-zh" class="lang-toggle active" data-lang="zh">中文</button>
+                <button id="lang-en" class="lang-toggle" data-lang="en">English</button>
+            </div>
+        </div>
+        
         <div class="bg-white rounded-xl p-6 md:p-8 card-shadow transition-all duration-300 hover:shadow-lg">
             <div class="text-center mb-8">
-                <h1 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-neutral mb-2">80克纸出纸率计算器</h1>
-                <p class="text-gray-600 max-w-2xl mx-auto">快速计算80克纸的出纸率，输入变量值即可得到结果</p>
+                <h1 class="text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-neutral mb-2">
+                    <span class="lang-zh">三胺纸出纸率计算器</span>
+                    <span class="lang-en hidden">Melamine Paper Yield Calculator</span>
+                </h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    <span class="lang-zh">快速计算三胺纸的出纸率，输入原纸克重和出纸率即可得到结果</span>
+                    <span class="lang-en hidden">Quickly calculate the yield of melamine paper by entering the base paper weight and yield rate</span>
+                </p>
             </div>
             
             <form id="calculatorForm" class="space-y-6">
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="grid md:grid-cols-3 gap-6">
                     <div class="space-y-2">
-                        <label for="variable" class="block text-sm font-medium text-gray-700">
-                            <i class="fa fa-calculator mr-2 text-primary"></i>变量值
+                        <label for="baseWeight" class="block text-sm font-medium text-gray-700">
+                            <i class="fa fa-balance-scale mr-2 text-primary"></i>
+                            <span class="lang-zh">原纸克重</span>
+                            <span class="lang-en hidden">Base Paper Weight</span>
                         </label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
                                 <i class="fa fa-sliders"></i>
                             </span>
-                            <input type="number" id="variable" name="variable" step="0.01" min="0.01" required
+                            <input type="number" id="baseWeight" name="baseWeight" step="0.01" min="0.01" required
                                 class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
-                                placeholder="请输入变量值">
+                                placeholder="例如80克 / e.g. 80gsm">
                         </div>
                     </div>
                     
                     <div class="space-y-2">
-                        <label for="result" class="block text-sm font-medium text-gray-700">
-                            <i class="fa fa-bar-chart mr-2 text-secondary"></i>计算结果
+                        <label for="outputRate" class="block text-sm font-medium text-gray-700">
+                            <i class="fa fa-percent mr-2 text-primary"></i>
+                            <span class="lang-zh">出纸率(%)</span>
+                            <span class="lang-en hidden">Yield Rate (%)</span>
                         </label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
                                 <i class="fa fa-percent"></i>
                             </span>
+                            <input type="number" id="outputRate" name="outputRate" step="0.01" min="0.01" max="100" value="97"
+                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
+                                placeholder="例如97 / e.g. 97">
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="result" class="block text-sm font-medium text-gray-700">
+                            <i class="fa fa-bar-chart mr-2 text-secondary"></i>
+                            <span class="lang-zh">计算结果</span>
+                            <span class="lang-en hidden">Calculation Result</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                <i class="fa fa-file-text-o"></i>
+                            </span>
                             <input type="text" id="result" name="result" readonly
                                 class="w-full pl-10 pr-3 py-3 bg-gray-50 border border-gray-300 rounded-lg"
-                                placeholder="计算结果将显示在这里">
+                                placeholder="计算结果将显示在这里 / Result will be displayed here">
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">
+                            <span class="lang-zh">按输入的出纸率核算张数</span>
+                            <span class="lang-en hidden">Number of sheets calculated based on the input yield rate</span>
                         </div>
                     </div>
                 </div>
@@ -78,27 +124,41 @@
                 <div class="flex flex-col md:flex-row gap-4 justify-center">
                     <button type="button" id="calculateBtn" 
                         class="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                        <i class="fa fa-calculator mr-2"></i>计算出纸率
+                        <i class="fa fa-calculator mr-2"></i>
+                        <span class="lang-zh">计算出纸率</span>
+                        <span class="lang-en hidden">Calculate Yield</span>
                     </button>
                     <button type="reset" 
                         class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-all duration-200 flex items-center justify-center">
-                        <i class="fa fa-refresh mr-2"></i>重置
+                        <i class="fa fa-refresh mr-2"></i>
+                        <span class="lang-zh">重置</span>
+                        <span class="lang-en hidden">Reset</span>
                     </button>
                 </div>
             </form>
             
             <div class="mt-8 bg-blue-50 border-l-4 border-primary p-4 rounded">
                 <h3 class="font-medium text-primary flex items-center">
-                    <i class="fa fa-info-circle mr-2"></i>计算公式说明
+                    <i class="fa fa-info-circle mr-2"></i>
+                    <span class="lang-zh">计算公式说明</span>
+                    <span class="lang-en hidden">Formula Explanation</span>
                 </h3>
                 <p class="text-gray-700 mt-2">
-                    出纸率计算公式：<code class="bg-blue-100 px-1 py-0.5 rounded text-sm">1 ÷ 1.25 ÷ 2.47 ÷ (变量) × 0.97 × 1000000</code>
+                    <span class="lang-zh">出纸率计算公式：</span>
+                    <span class="lang-en hidden">Yield calculation formula：</span>
+                    <code class="bg-blue-100 px-1 py-0.5 rounded text-sm block mt-1">
+                        <span class="lang-zh">1 ÷ 1.25 ÷ 2.47 ÷ (原纸克重) × (出纸率÷100) × 1000000</span>
+                        <span class="lang-en hidden">1 ÷ 1.25 ÷ 2.47 ÷ (Base Paper Weight) × (Yield Rate÷100) × 1000000</span>
+                    </code>
                 </p>
                 <p class="text-gray-700 mt-2">
-                    这个公式用于计算80克纸在特定变量条件下的出纸率，结果以数值形式显示。
+                    <span class="lang-zh">这个公式用于计算三胺纸在特定原纸克重和出纸率条件下的出纸张数。</span>
+                    <span class="lang-en hidden">This formula is used to calculate the number of melamine paper sheets based on specific base paper weight and yield rate.</span>
                 </p>
                 <p class="text-gray-700 mt-2">
-                    <i class="fa fa-lightbulb-o text-yellow-500 mr-2"></i>结果单位为"张"，已四舍五入取整数。
+                    <i class="fa fa-lightbulb-o text-yellow-500 mr-2"></i>
+                    <span class="lang-zh">结果单位为"张"，已四舍五入取整数。</span>
+                    <span class="lang-en hidden">The result is in "sheets" and has been rounded to the nearest integer.</span>
                 </p>
             </div>
         </div>
@@ -106,21 +166,55 @@
         <div class="mt-8 bg-white rounded-xl p-6 card-shadow">
             <div class="flex items-center justify-center">
                 <div class="text-center">
-                    <div class="text-sm text-gray-600 mb-2">创作者信息</div>
-                    <div class="text-lg font-medium text-primary">好上好装饰纸-Lee</div>
+                    <div class="text-sm text-gray-600 mb-2">
+                        <span class="lang-zh">创作者信息</span>
+                        <span class="lang-en hidden">Creator Information</span>
+                    </div>
+                    <div class="text-lg font-medium text-primary">
+                        <span class="lang-zh">好上好装饰纸-Lee</span>
+                        <span class="lang-en hidden">HSH DECOR PAPER ——Lee</span>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="mt-4 text-center text-gray-500 text-sm">
-            <p>© 2025 纸业计算器 | 随时计算纸张出纸率</p>
+            <p>
+                <span class="lang-zh">© 2025 纸业计算器 | 随时计算纸张出纸率</span>
+                <span class="lang-en hidden">© 2025 Paper Industry Calculator | Calculate paper yield anytime</span>
+            </p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // 语言切换功能
+            const langToggles = document.querySelectorAll('.lang-toggle');
+            langToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // 移除所有激活状态
+                    langToggles.forEach(t => t.classList.remove('active'));
+                    
+                    // 添加当前激活状态
+                    this.classList.add('active');
+                    
+                    // 显示对应语言内容
+                    document.querySelectorAll('.lang-zh').forEach(el => {
+                        el.classList.toggle('hidden', lang !== 'zh');
+                    });
+                    
+                    document.querySelectorAll('.lang-en').forEach(el => {
+                        el.classList.toggle('hidden', lang !== 'en');
+                    });
+                });
+            });
+            
+            // 计算器功能
             const form = document.getElementById('calculatorForm');
-            const variableInput = document.getElementById('variable');
+            const baseWeightInput = document.getElementById('baseWeight');
+            const outputRateInput = document.getElementById('outputRate');
             const resultInput = document.getElementById('result');
             const calculateBtn = document.getElementById('calculateBtn');
             
@@ -131,20 +225,35 @@
             });
             
             function calculateOutputRate() {
-                const variable = parseFloat(variableInput.value);
+                const baseWeight = parseFloat(baseWeightInput.value);
+                const outputRate = parseFloat(outputRateInput.value);
                 
-                if (isNaN(variable) || variable <= 0) {
-                    showToast('请输入有效的变量值（必须大于0）', 'error');
+                if (isNaN(baseWeight) || baseWeight <= 0) {
+                    showToast(
+                        '<span class="lang-zh">请输入有效的原纸克重（必须大于0）</span><span class="lang-en hidden">Please enter a valid base paper weight (must be greater than 0)</span>', 
+                        'error'
+                    );
                     return;
                 }
                 
-                // 计算公式: 1/1.25/2.47/(变量)*0.97*1000000
-                const result = (1 / 1.25 / 2.47 / variable * 0.97 * 1000000);
+                if (isNaN(outputRate) || outputRate <= 0 || outputRate > 100) {
+                    showToast(
+                        '<span class="lang-zh">请输入有效的出纸率（范围0.01-100）</span><span class="lang-en hidden">Please enter a valid yield rate (range 0.01-100)</span>', 
+                        'error'
+                    );
+                    return;
+                }
+                
+                // 计算公式: 1/1.25/2.47/(原纸克重)*(出纸率/100)*1000000
+                const result = (1 / 1.25 / 2.47 / baseWeight * (outputRate / 100) * 1000000);
                 
                 // 四舍五入取整数，并添加单位"张"
-                resultInput.value = Math.round(result).toLocaleString() + ' 张';
+                resultInput.value = Math.round(result).toLocaleString() + ' 张 / sheets';
                 
-                showToast('计算成功！', 'success');
+                showToast(
+                    '<span class="lang-zh">计算成功！</span><span class="lang-en hidden">Calculation successful!</span>', 
+                    'success'
+                );
                 
                 // 添加计算动画效果
                 resultInput.classList.add('ring-2', 'ring-secondary/50');
@@ -178,7 +287,7 @@
                 toast.innerHTML = `
                     <div class="flex items-center">
                         <i class="fa ${icon} mr-2"></i>
-                        <span>${message}</span>
+                        <div>${message}</div>
                     </div>
                 `;
                 
