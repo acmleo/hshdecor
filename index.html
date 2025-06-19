@@ -46,7 +46,23 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans">
-    <div class="container mx-auto px-4 py-12 max-w-3xl">
+    <div class="container mx-auto px-4 py-6 max-w-3xl">
+        <!-- 放置logo和公司名称 -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+            <div class="flex items-center space-x-3">
+                <img src="https://iororwxhpjiilk5q-static.micyjz.com/cloud/llBpiKrklqSRoiqllkjjio/haoshanghaologo.png" alt="好上好新材logo" class="h-12">
+                <div>
+                    <div class="text-sm font-medium text-gray-700 lang-zh">广东好上好科技有限公司</div>
+                    <div class="text-xs text-gray-500 lang-en hidden">Guangdong HSH Technology Co., Ltd.</div>
+                </div>
+            </div>
+            <a href="https://hshdecor.com/" target="_blank" class="text-primary text-sm font-medium hover:underline flex items-center mt-2 md:mt-0">
+                <i class="fa fa-external-link mr-1"></i>
+                <span class="lang-zh">访问公司网页</span>
+                <span class="lang-en hidden">Visit Company Website</span>
+            </a>
+        </div>
+        
         <div class="flex justify-end mb-4">
             <div class="flex space-x-2 bg-white rounded-lg p-1 shadow-sm">
                 <button id="lang-zh" class="lang-toggle active" data-lang="zh">中文</button>
