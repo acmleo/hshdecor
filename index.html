@@ -77,81 +77,170 @@
                     <span class="lang-en hidden">Melamine Paper Yield Calculator</span>
                 </h1>
                 <p class="text-gray-600 max-w-2xl mx-auto">
-                    <span class="lang-zh">快速计算三胺纸的出纸率，输入原纸克重和出纸率即可得到结果</span>
-                    <span class="lang-en hidden">Quickly calculate the yield of melamine paper by entering the base paper weight and yield rate</span>
+                    <span class="lang-zh">快速计算三胺纸的出纸率和单价，输入相关参数即可得到结果</span>
+                    <span class="lang-en hidden">Quickly calculate the yield and unit price of melamine paper by entering relevant parameters</span>
                 </p>
             </div>
             
-            <form id="calculatorForm" class="space-y-6">
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="space-y-2">
-                        <label for="baseWeight" class="block text-sm font-medium text-gray-700">
-                            <i class="fa fa-balance-scale mr-2 text-primary"></i>
-                            <span class="lang-zh">原纸克重</span>
-                            <span class="lang-en hidden">Base Paper Weight</span>
-                        </label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                                <i class="fa fa-sliders"></i>
-                            </span>
-                            <input type="number" id="baseWeight" name="baseWeight" step="0.01" min="0.01" required
-                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
-                                placeholder="例如80克 / e.g. 80gsm">
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label for="outputRate" class="block text-sm font-medium text-gray-700">
-                            <i class="fa fa-percent mr-2 text-primary"></i>
-                            <span class="lang-zh">出纸率(%)</span>
-                            <span class="lang-en hidden">Yield Rate (%)</span>
-                        </label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                                <i class="fa fa-percent"></i>
-                            </span>
-                            <input type="number" id="outputRate" name="outputRate" step="0.01" min="0.01" max="100" value="97"
-                                class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
-                                placeholder="例如97 / e.g. 97">
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label for="result" class="block text-sm font-medium text-gray-700">
-                            <i class="fa fa-bar-chart mr-2 text-secondary"></i>
-                            <span class="lang-zh">计算结果</span>
-                            <span class="lang-en hidden">Calculation Result</span>
-                        </label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                                <i class="fa fa-file-text-o"></i>
-                            </span>
-                            <input type="text" id="result" name="result" readonly
-                                class="w-full pl-10 pr-3 py-3 bg-gray-50 border border-gray-300 rounded-lg"
-                                placeholder="计算结果将显示在这里 / Result will be displayed here">
-                        </div>
-                        <div class="text-xs text-gray-500 mt-1">
-                            <span class="lang-zh">按输入的出纸率核算张数</span>
-                            <span class="lang-en hidden">Number of sheets calculated based on the input yield rate</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- 出纸率计算模块 -->
+            <div class="mb-8 border-b border-gray-200 pb-8">
+                <h2 class="text-xl font-semibold text-neutral mb-6 flex items-center">
+                    <i class="fa fa-calculator mr-2 text-primary"></i>
+                    <span class="lang-zh">出纸率计算</span>
+                    <span class="lang-en hidden">Yield Calculation</span>
+                </h2>
                 
-                <div class="flex flex-col md:flex-row gap-4 justify-center">
-                    <button type="button" id="calculateBtn" 
-                        class="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                        <i class="fa fa-calculator mr-2"></i>
-                        <span class="lang-zh">计算出纸率</span>
-                        <span class="lang-en hidden">Calculate Yield</span>
-                    </button>
-                    <button type="reset" 
-                        class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-all duration-200 flex items-center justify-center">
-                        <i class="fa fa-refresh mr-2"></i>
-                        <span class="lang-zh">重置</span>
-                        <span class="lang-en hidden">Reset</span>
-                    </button>
-                </div>
-            </form>
+                <form id="yieldCalculatorForm" class="space-y-6">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="space-y-2">
+                            <label for="baseWeight" class="block text-sm font-medium text-gray-700">
+                                <i class="fa fa-balance-scale mr-2 text-primary"></i>
+                                <span class="lang-zh">原纸克重</span>
+                                <span class="lang-en hidden">Base Paper Weight</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                    <i class="fa fa-sliders"></i>
+                                </span>
+                                <input type="number" id="baseWeight" name="baseWeight" step="0.01" min="0.01" required
+                                    class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
+                                    placeholder="例如80克 / e.g. 80gsm">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="outputRate" class="block text-sm font-medium text-gray-700">
+                                <i class="fa fa-percent mr-2 text-primary"></i>
+                                <span class="lang-zh">出纸率(%)</span>
+                                <span class="lang-en hidden">Yield Rate (%)</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                    <i class="fa fa-percent"></i>
+                                </span>
+                                <input type="number" id="outputRate" name="outputRate" step="0.01" min="0.01" max="100" value="97"
+                                    class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
+                                    placeholder="例如97 / e.g. 97">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="yieldResult" class="block text-sm font-medium text-gray-700">
+                                <i class="fa fa-bar-chart mr-2 text-secondary"></i>
+                                <span class="lang-zh">出纸率结果</span>
+                                <span class="lang-en hidden">Yield Result</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                    <i class="fa fa-file-text-o"></i>
+                                </span>
+                                <input type="text" id="yieldResult" name="yieldResult" readonly
+                                    class="w-full pl-10 pr-3 py-3 bg-gray-50 border border-gray-300 rounded-lg"
+                                    placeholder="计算结果将显示在这里 / Result will be displayed here">
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">
+                                <span class="lang-zh">单位: 张/吨</span>
+                                <span class="lang-en hidden">Unit: sheets/ton</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button type="button" id="calculateYieldBtn" 
+                            class="px-6 py-3 bg-primary hover:bg-primary/90 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fa fa-calculator mr-2"></i>
+                            <span class="lang-zh">计算出纸率</span>
+                            <span class="lang-en hidden">Calculate Yield</span>
+                        </button>
+                        <button type="reset" 
+                            class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-all duration-200 flex items-center justify-center">
+                            <i class="fa fa-refresh mr-2"></i>
+                            <span class="lang-zh">重置</span>
+                            <span class="lang-en hidden">Reset</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 三胺纸单价核算模块 -->
+            <div>
+                <h2 class="text-xl font-semibold text-neutral mb-6 flex items-center">
+                    <i class="fa fa-money mr-2 text-primary"></i>
+                    <span class="lang-zh">三胺纸单价核算</span>
+                    <span class="lang-en hidden">Melamine Paper Unit Price Calculation</span>
+                </h2>
+                
+                <form id="priceCalculatorForm" class="space-y-6">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="space-y-2">
+                            <label for="paperPricePerTon" class="block text-sm font-medium text-gray-700">
+                                <i class="fa fa-truck mr-2 text-primary"></i>
+                                <span class="lang-zh">原纸每吨单价</span>
+                                <span class="lang-en hidden">Base Paper Price per Ton</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                    <i class="fa fa-cny"></i>
+                                </span>
+                                <input type="number" id="paperPricePerTon" name="paperPricePerTon" step="0.01" min="0.01" required
+                                    class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
+                                    placeholder="例如6000元 / e.g. 6000 CNY">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="processingFee" class="block text-sm font-medium text-gray-700">
+                                <i class="fa fa-wrench mr-2 text-primary"></i>
+                                <span class="lang-zh">浸胶加工费(元/张)</span>
+                                <span class="lang-en hidden">Impregnation Processing Fee (CNY/sheet)</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                    <i class="fa fa-cny"></i>
+                                </span>
+                                <input type="number" id="processingFee" name="processingFee" step="0.01" min="0.01" required
+                                    class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm input-focus transition-all duration-200"
+                                    placeholder="例如0.5元 / e.g. 0.5 CNY">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="priceResult" class="block text-sm font-medium text-gray-700">
+                                <i class="fa fa-tag mr-2 text-secondary"></i>
+                                <span class="lang-zh">三胺纸单价</span>
+                                <span class="lang-en hidden">Melamine Paper Unit Price</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                    <i class="fa fa-cny"></i>
+                                </span>
+                                <input type="text" id="priceResult" name="priceResult" readonly
+                                    class="w-full pl-10 pr-3 py-3 bg-gray-50 border border-gray-300 rounded-lg"
+                                    placeholder="计算结果将显示在这里 / Result will be displayed here">
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">
+                                <span class="lang-zh">单位: 元/张</span>
+                                <span class="lang-en hidden">Unit: CNY/sheet</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button type="button" id="calculatePriceBtn" 
+                            class="px-6 py-3 bg-secondary hover:bg-secondary/90 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fa fa-calculator mr-2"></i>
+                            <span class="lang-zh">计算单价</span>
+                            <span class="lang-en hidden">Calculate Unit Price</span>
+                        </button>
+                        <button type="reset" 
+                            class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium rounded-lg transition-all duration-200 flex items-center justify-center">
+                            <i class="fa fa-refresh mr-2"></i>
+                            <span class="lang-zh">重置</span>
+                            <span class="lang-en hidden">Reset</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
             
             <div class="mt-8 bg-blue-50 border-l-4 border-primary p-4 rounded">
                 <h3 class="font-medium text-primary flex items-center">
@@ -159,23 +248,37 @@
                     <span class="lang-zh">计算公式说明</span>
                     <span class="lang-en hidden">Formula Explanation</span>
                 </h3>
-                <p class="text-gray-700 mt-2">
-                    <span class="lang-zh">出纸率计算公式：</span>
-                    <span class="lang-en hidden">Yield calculation formula：</span>
-                    <code class="bg-blue-100 px-1 py-0.5 rounded text-sm block mt-1">
-                        <span class="lang-zh">1 ÷ 1.25 ÷ 2.47 ÷ (原纸克重) × (出纸率÷100) × 1000000</span>
-                        <span class="lang-en hidden">1 ÷ 1.25 ÷ 2.47 ÷ (Base Paper Weight) × (Yield Rate÷100) × 1000000</span>
-                    </code>
-                </p>
-                <p class="text-gray-700 mt-2">
-                    <span class="lang-zh">这个公式用于计算三胺纸在特定原纸克重和出纸率条件下的出纸张数。</span>
-                    <span class="lang-en hidden">This formula is used to calculate the number of melamine paper sheets based on specific base paper weight and yield rate.</span>
-                </p>
-                <p class="text-gray-700 mt-2">
-                    <i class="fa fa-lightbulb-o text-yellow-500 mr-2"></i>
-                    <span class="lang-zh">结果单位为"张"，已四舍五入取整数。</span>
-                    <span class="lang-en hidden">The result is in "sheets" and has been rounded to the nearest integer.</span>
-                </p>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-gray-800 mb-1">
+                            <span class="lang-zh">出纸率计算公式：</span>
+                            <span class="lang-en hidden">Yield calculation formula：</span>
+                        </h4>
+                        <code class="bg-blue-100 px-1 py-0.5 rounded text-sm block">
+                            <span class="lang-zh">1 ÷ 1.25 ÷ 2.47 ÷ (原纸克重) × (出纸率÷100) × 1000000</span>
+                            <span class="lang-en hidden">1 ÷ 1.25 ÷ 2.47 ÷ (Base Paper Weight) × (Yield Rate÷100) × 1000000</span>
+                        </code>
+                        <p class="text-gray-700 text-sm mt-1">
+                            <span class="lang-zh">该公式用于计算每吨原纸能生产的三胺纸数量。</span>
+                            <span class="lang-en hidden">This formula calculates the number of melamine paper sheets that can be produced per ton of base paper.</span>
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-medium text-gray-800 mb-1">
+                            <span class="lang-zh">单价计算公式：</span>
+                            <span class="lang-en hidden">Unit Price calculation formula：</span>
+                        </h4>
+                        <code class="bg-blue-100 px-1 py-0.5 rounded text-sm block">
+                            <span class="lang-zh">原纸每吨单价 ÷ 出纸率 + 浸胶加工费</span>
+                            <span class="lang-en hidden">Base Paper Price per Ton ÷ Yield + Processing Fee</span>
+                        </code>
+                        <p class="text-gray-700 text-sm mt-1">
+                            <span class="lang-zh">该公式用于计算每张三胺纸的生产成本。</span>
+                            <span class="lang-en hidden">This formula calculates the production cost per sheet of melamine paper.</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -196,8 +299,8 @@
         
         <div class="mt-4 text-center text-gray-500 text-sm">
             <p>
-                <span class="lang-zh">© 2025 纸业计算器 | 随时计算纸张出纸率</span>
-                <span class="lang-en hidden">© 2025 Paper Industry Calculator | Calculate paper yield anytime</span>
+                <span class="lang-zh">© 2025 纸业计算器 | 随时计算纸张出纸率和单价</span>
+                <span class="lang-en hidden">© 2025 Paper Industry Calculator | Calculate paper yield and unit price anytime</span>
             </p>
         </div>
     </div>
@@ -227,20 +330,20 @@
                 });
             });
             
-            // 计算器功能
-            const form = document.getElementById('calculatorForm');
+            // 出纸率计算器功能
+            const yieldForm = document.getElementById('yieldCalculatorForm');
             const baseWeightInput = document.getElementById('baseWeight');
             const outputRateInput = document.getElementById('outputRate');
-            const resultInput = document.getElementById('result');
-            const calculateBtn = document.getElementById('calculateBtn');
+            const yieldResultInput = document.getElementById('yieldResult');
+            const calculateYieldBtn = document.getElementById('calculateYieldBtn');
             
-            calculateBtn.addEventListener('click', calculateOutputRate);
-            form.addEventListener('submit', function(e) {
+            calculateYieldBtn.addEventListener('click', calculateYield);
+            yieldForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                calculateOutputRate();
+                calculateYield();
             });
             
-            function calculateOutputRate() {
+            function calculateYield() {
                 const baseWeight = parseFloat(baseWeightInput.value);
                 const outputRate = parseFloat(outputRateInput.value);
                 
@@ -263,18 +366,88 @@
                 // 计算公式: 1/1.25/2.47/(原纸克重)*(出纸率/100)*1000000
                 const result = (1 / 1.25 / 2.47 / baseWeight * (outputRate / 100) * 1000000);
                 
-                // 四舍五入取整数，并添加单位"张"
-                resultInput.value = Math.round(result).toLocaleString() + ' 张 / sheets';
+                // 四舍五入取整数，并添加单位
+                yieldResultInput.value = Math.round(result).toLocaleString() + ' 张/吨';
                 
                 showToast(
-                    '<span class="lang-zh">计算成功！</span><span class="lang-en hidden">Calculation successful!</span>', 
+                    '<span class="lang-zh">出纸率计算成功！</span><span class="lang-en hidden">Yield calculation successful!</span>', 
                     'success'
                 );
                 
                 // 添加计算动画效果
-                resultInput.classList.add('ring-2', 'ring-secondary/50');
+                yieldResultInput.classList.add('ring-2', 'ring-primary/50');
                 setTimeout(() => {
-                    resultInput.classList.remove('ring-2', 'ring-secondary/50');
+                    yieldResultInput.classList.remove('ring-2', 'ring-primary/50');
+                }, 1000);
+                
+                // 如果单价计算表单中有值，自动触发单价计算
+                const paperPricePerTon = document.getElementById('paperPricePerTon').value;
+                const processingFee = document.getElementById('processingFee').value;
+                if (paperPricePerTon && processingFee) {
+                    setTimeout(calculatePrice, 500);
+                }
+            }
+            
+            // 单价计算器功能
+            const priceForm = document.getElementById('priceCalculatorForm');
+            const paperPricePerTonInput = document.getElementById('paperPricePerTon');
+            const processingFeeInput = document.getElementById('processingFee');
+            const priceResultInput = document.getElementById('priceResult');
+            const calculatePriceBtn = document.getElementById('calculatePriceBtn');
+            
+            calculatePriceBtn.addEventListener('click', calculatePrice);
+            priceForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculatePrice();
+            });
+            
+            function calculatePrice() {
+                const yieldResult = yieldResultInput.value;
+                if (!yieldResult || yieldResult === '计算结果将显示在这里 / Result will be displayed here') {
+                    showToast(
+                        '<span class="lang-zh">请先计算出纸率！</span><span class="lang-en hidden">Please calculate the yield first!</span>', 
+                        'warning'
+                    );
+                    return;
+                }
+                
+                const paperPricePerTon = parseFloat(paperPricePerTonInput.value);
+                const processingFee = parseFloat(processingFeeInput.value);
+                
+                if (isNaN(paperPricePerTon) || paperPricePerTon <= 0) {
+                    showToast(
+                        '<span class="lang-zh">请输入有效的原纸每吨单价（必须大于0）</span><span class="lang-en hidden">Please enter a valid base paper price per ton (must be greater than 0)</span>', 
+                        'error'
+                    );
+                    return;
+                }
+                
+                if (isNaN(processingFee) || processingFee <= 0) {
+                    showToast(
+                        '<span class="lang-zh">请输入有效的浸胶加工费（必须大于0）</span><span class="lang-en hidden">Please enter a valid impregnation processing fee (must be greater than 0)</span>', 
+                        'error'
+                    );
+                    return;
+                }
+                
+                // 从出纸率结果中提取数值（去除单位和逗号）
+                const yieldValue = parseFloat(yieldResult.replace(/,/g, '').replace(/ 张\/吨/g, ''));
+                
+                // 计算公式: 原纸每吨单价 ÷ 出纸率 + 浸胶加工费
+                const result = (paperPricePerTon / yieldValue + processingFee);
+                
+                // 保留两位小数，并添加单位
+                priceResultInput.value = result.toFixed(2) + ' 元/张';
+                
+                showToast(
+                    '<span class="lang-zh">单价计算成功！</span><span class="lang-en hidden">Unit price calculation successful!</span>', 
+                    'success'
+                );
+                
+                // 添加计算动画效果
+                priceResultInput.classList.add('ring-2', 'ring-secondary/50');
+                setTimeout(() => {
+                    priceResultInput.classList.remove('ring-2', 'ring-secondary/50');
                 }, 1000);
             }
             
@@ -294,6 +467,9 @@
                 } else if (type === 'error') {
                     bgColor = 'bg-red-500';
                     icon = 'fa-exclamation-circle';
+                } else if (type === 'warning') {
+                    bgColor = 'bg-yellow-500';
+                    icon = 'fa-exclamation-triangle';
                 } else {
                     bgColor = 'bg-blue-500';
                     icon = 'fa-info-circle';
